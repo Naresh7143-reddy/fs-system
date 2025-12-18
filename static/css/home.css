@@ -8,6 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    color: #333;
 }
 
 .container {
@@ -15,50 +16,44 @@ body {
     padding: 50px 40px;
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 420px;
-}
-
-h2 {
     text-align: center;
-    margin-bottom: 40px;
+    max-width: 450px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2.4em;
+    margin-bottom: 20px;
     color: #444;
-    font-size: 2em;
 }
 
-input {
-    width: 100%;
-    padding: 16px;
-    margin: 12px 0;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    font-size: 16px;
+p {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    color: #666;
 }
 
-input:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
-}
-
-button {
-    width: 100%;
-    padding: 16px;
+.links a {
+    display: inline-block;
+    margin: 12px;
+    padding: 14px 32px;
     background: #667eea;
     color: white;
-    border: none;
+    text-decoration: none;
     border-radius: 12px;
-    font-size: 1.1em;
     font-weight: 600;
-    cursor: pointer;
-    margin-top: 25px;
-    transition: 0.3s;
+    font-size: 1.1em;
+    transition: all 0.3s;
 }
 
-button:hover {
+.links a:hover {
     background: #5a6fd8;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
 @media (max-width: 480px) {
-    .container { padding: 40px 25px; }
+    .container { padding: 40px 20px; }
+    .links a { display: block; width: 100%; margin: 10px 0; }
+    h1 { font-size: 2em; }
 }

@@ -16,34 +16,24 @@ body {
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 420px;
+    max-width: 500px;
+    text-align: center;
 }
 
 h2 {
-    text-align: center;
     margin-bottom: 40px;
     color: #444;
     font-size: 2em;
 }
 
-input {
-    width: 100%;
-    padding: 16px;
-    margin: 12px 0;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+#fileInput {
+    padding: 12px;
+    margin: 20px 0;
     font-size: 16px;
 }
 
-input:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
-}
-
 button {
-    width: 100%;
-    padding: 16px;
+    padding: 16px 32px;
     background: #667eea;
     color: white;
     border: none;
@@ -51,7 +41,6 @@ button {
     font-size: 1.1em;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 25px;
     transition: 0.3s;
 }
 
@@ -59,6 +48,34 @@ button:hover {
     background: #5a6fd8;
 }
 
+#shareSection {
+    margin-top: 40px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 14px;
+}
+
+#shareLink {
+    width: 85%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 15px;
+    text-align: center;
+}
+
+#shareSection button {
+    margin-top: 15px;
+    padding: 12px 24px;
+    background: #28a745;
+}
+
+#shareSection button:hover {
+    background: #218838;
+}
+
 @media (max-width: 480px) {
     .container { padding: 40px 25px; }
+    #shareLink { width: 100%; }
 }
