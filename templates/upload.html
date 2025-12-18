@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Upload</title>
+</head>
+<body>
+
+<h2>Upload Encrypted File</h2>
+
+<input type="file" id="fileInput" />
+<button onclick="handleUpload()">Encrypt & Upload</button>
+
+<hr>
+
+<!-- 🔹 Share link section -->
+<div id="shareSection" style="display:none;">
+  <h3>Share this secure link</h3>
+  <input type="text" id="shareLink" readonly style="width:80%;" />
+  <button onclick="copyLink()">Copy</button>
+</div>
+<script src="{% static 'js/crypto.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Image Viewer</title>
+</head>
+<body>
+
+<h2>Secure Image Viewer</h2>
+<p>The image is rendered from decrypted bytes using MIME type.</p>
+
+<button onclick="startDecryptAndRender()">View Image</button>
+
+<hr>
+
+<div id="output"></div>
+<button onclick="decryptAndDownload()">Download Decrypted File</button>
+
+<br><br>
+
+<button id="imageBtn" style="display:none;" onclick="viewImage()">
+  View Image
+</button>
+
+<button id="pdfBtn" style="display:none;" onclick="viewPDF()">
+  View PDF
+</button>
+
+<button id="docBtn" style="display:none;" onclick="viewDOC()">
+  View Document
+</button>
+
+<hr>
+<div id="output"></div>
+
+<script src="{% static 'js/image_viewer.js' %}"></script>
+</body>
+</html>

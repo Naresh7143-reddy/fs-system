@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Secure Download</title>
+</head>
+<body>
+
+<h2>Secure File Download</h2>
+
+<p>Click below to decrypt and download the file.</p>
+
+<button onclick="startDownload()">Download & Decrypt</button>
+
+<script>
+  const FILE_ID = "{{ file_id }}";
+</script>
+<script src="{% static 'js/decrypt.js' %}"></script>
+
+</body>
+</html>
