@@ -5,28 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
 </head>
 <body>
-     <form method="post">
+    <form method="post" id="signupForm">
         {% csrf_token %}
+        
+        <!-- Optional: Add your SIMATS logo -->
+        <img src="https://arms.sse.saveetha.com/assets/admin/layout/img/logo.png" alt="SIMATS Logo" class="logo"> 
+        
+        <h1>Sign Up</h1>
+        
         <input type="email" id="email" name="email" placeholder="Email" required>
-        <input type="phone" id="phone" name="phone" placeholder="Phone Number" required>
+        <input type="tel" id="phone" name="phone" placeholder="Phone Number" maxlength="10" required>
         <input type="password" id="password" name="password" placeholder="Password" required>
         <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+        
         <button type="submit">Sign Up</button>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
     </form>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(e) {
+            const password = document.getElementById("password").value;
+            const confirm_password = document.getElementById("confirm_password").value;
+            const phone = document.getElementById("phone").value.trim();
+
+            if (password !== confirm_password) {
+                e.preventDefault();
+                alert("Passwords do not match!");
+                return;
+            }
+
+            if (!/^\d{10}$/.test(phone)) {
+                e.preventDefault();
+                alert("Phone number must be exactly 10 digits!");
+                return;
+            }
+        });
+    </script>
 </body>
-<script>
-    const email = document.getElementById("email");
-    const phone = document.getElementById("phone");
-    const username = document.getElementById("username");
-    const password = document.getElementById("password");
-    const confirm_password = document.getElementById("confirm_password");
-    if (password.value !== confirm_password.value) {
-        alert("Passwords do not match!");
-    } 
-    if (phone.value.length != 10) {
-        alert("Phone number must be 10 digits!");
-    }
-</script>
 </html>

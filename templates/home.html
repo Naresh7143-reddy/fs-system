@@ -4,17 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>File Sharing System</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <h1>file sharing system</h1>
-    {% if user.is_authenticated %}
-        <p>Welcome, to file sharing system !</p>
-        <a href="{% url 'upload' %}">Upload File</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'signup' %}">Sign Up</a>
-    {% endif %}
+    <div class="container">
+       
+        <!-- <img src="your-logo-url.png" alt="SIMATS Logo" class="logo"> -->
+        
+        <h1>File Sharing System</h1>
+        
+        {% if user.is_authenticated %}
+            <p>Welcome back, {{ user.get_full_name|default:user.username }}!</p>
+            <a href="{% url 'upload' %}">Upload File</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <p>Please log in or sign up to continue</p>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+    </div>
 </body>
 </html>

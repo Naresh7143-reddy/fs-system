@@ -5,17 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
 </head>
 <body>
     <form method="post">
-        {% csrf_token %}
-        <input type="email" id="email" name="email" placeholder="Email" required>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-        {%if messages%}
-            {%for message in messages%}
-                <div class="message {{ message.tags }}">{{ message }}</div>
-            {%endfor%}
-        {%endif%}
+    {% csrf_token %}
+    
+    <!-- Add your logo here (replace with actual SIMATS logo URL) -->
+    <img src="https://arms.sse.saveetha.com/assets/admin/layout/img/logo.png" alt="SIMATS Logo" class="logo">
+    
+    <h1>Sign In</h1>
+    
+    <input type="email" id="email" name="email" placeholder="Email" required>
+    <input type="password" id="password" name="password" placeholder="Password" required>
+    
+    <button type="submit">LOGIN</button>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</form>
+</form>
 </body>
 </html>

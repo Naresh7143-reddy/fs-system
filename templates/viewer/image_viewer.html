@@ -1,38 +1,33 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure Image Viewer</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/viewer.css' %}">
 </head>
 <body>
+  <div class="container">
+    <h2>Secure File Viewer</h2>
+    <p>The file is decrypted in your browser only.<br>No data leaves your device.</p>
 
-<h2>Secure Image Viewer</h2>
-<p>The image is rendered from decrypted bytes using MIME type.</p>
+    <button onclick="startDecryptAndRender()">Decrypt & View File</button>
+    <hr>
 
-<button onclick="startDecryptAndRender()">View Image</button>
+    <div id="output"></div>
 
-<hr>
+    <button onclick="decryptAndDownload()">Download Decrypted File</button>
 
-<div id="output"></div>
-<button onclick="decryptAndDownload()">Download Decrypted File</button>
+    <br><br>
 
-<br><br>
+    <!-- These appear conditionally based on file type -->
+    <button id="imageBtn" style="display:none;" onclick="viewImage()">View as Image</button>
+    <button id="pdfBtn" style="display:none;" onclick="viewPDF()">View as PDF</button>
+    <button id="docBtn" style="display:none;" onclick="viewDOC()">View as Document</button>
+  </div>
 
-<button id="imageBtn" style="display:none;" onclick="viewImage()">
-  View Image
-</button>
-
-<button id="pdfBtn" style="display:none;" onclick="viewPDF()">
-  View PDF
-</button>
-
-<button id="docBtn" style="display:none;" onclick="viewDOC()">
-  View Document
-</button>
-
-<hr>
-<div id="output"></div>
-
-<script src="{% static 'js/image_viewer.js' %}"></script>
+  <script src="{% static 'js/image_viewer.js' %}"></script>
 </body>
 </html>
