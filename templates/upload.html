@@ -3,54 +3,43 @@
 <html>
 <head>
   <title>Secure Upload</title>
-  <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/upload.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/upload.css' %}">
 </head>
 <body>
-  <div class="container">
-    <h2>Upload Encrypted File</h2>
-    
-    <div class="file-input-wrapper">
-      <input type="file" id="fileInput" required />
-      <label for="fileInput" class="file-input-label" data-filename="No file chosen"></label>
-    </div>
-    
-    <button onclick="handleUpload()">Encrypt & Upload</button>
-    
-    <hr>
-    
-    <div id="shareSection" style="display:none;">
-      <h3>Share this secure link</h3>
-      <input type="text" id="shareLink" readonly />
-      <button id="copyBtn" onclick="copyLink()">Copy</button>
-    </div>
+
+<div class="container">
+  <h2>Upload Encrypted File</h2>
+
+  <div class="file-input-wrapper">
+    <input type="file" id="fileInput">
+    <label for="fileInput" class="file-input-label" data-filename="No file chosen"></label>
   </div>
 
-  <script src="{% static 'js/crypto.js' %}"></script>
-  <script>
-    // Update label with selected filename
-    document.getElementById('fileInput').addEventListener('change', function(e) {
-      const label = document.querySelector('.file-input-label');
-      if (e.target.files.length > 0) {
-        label.setAttribute('data-filename', e.target.files[0].name);
-      } else {
-        label.setAttribute('data-filename', 'No file chosen');
-      }
-    });
+  <button onclick="handleUpload()">Encrypt & Upload</button>
 
-    function copyLink() {
-      const link = document.getElementById('shareLink');
-      link.select();
-      document.execCommand('copy');
-      
-      const btn = document.getElementById('copyBtn');
-      btn.textContent = 'Copied!';
-      btn.classList.add('copied');
-      setTimeout(() => {
-        btn.textContent = 'Copy';
-        btn.classList.remove('copied');
-      }, 2000);
-    }
-  </script>
+  <hr>
+
+  <div id="shareSection" style="display:none;">
+    <h3>Share this secure link</h3>
+    <input type="text" id="shareLink" readonly>
+    <button onclick="copyLink()">Copy</button>
+  </div>
+</div>
+
+<script src="{% static 'js/crypto.js' %}?v=2"></script>
+<script>
+document.getElementById('fileInput').addEventListener('change', e => {
+  document.querySelector('.file-input-label')
+    .setAttribute('data-filename', e.target.files[0]?.name || 'No file chosen');
+});
+
+function copyLink() {
+  const link = document.getElementById("shareLink");
+  link.select();
+  navigator.clipboard.writeText(link.value);
+}
+</script>
+
 </body>
 </html>
