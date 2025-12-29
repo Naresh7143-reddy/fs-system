@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+/* HERO FULL SCREEN */
+.hero-100vh {
+  height: 100vh;
+  background: whitesmoke;
+  color:black;
+  display: flex;
+  align-items: center;
+}
+
+/* BIG HEADING */
+.hero-title {
+  font-size: 4rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+/* Subtitle */
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: rgb(73, 73, 167);
+  max-width: 600px;
+}
+
+/* Buttons */
+.btn-lg {
+  border-radius: 14px;
+  padding: 14px 32px;
+}
+
+/* Image */
+.hero-img {
+    width: 100%;
+    max-width: 400px;
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+}

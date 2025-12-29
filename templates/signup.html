@@ -2,53 +2,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+  <meta charset="UTF-8">
+  <title>Sign Up | SecureShare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      overflow: hidden;
+    }
+
+    /* Animated Card */
+    .signup-card {
+      width: 400px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.3);
+      animation: slideUp 0.8s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .title {
+      font-size: 1.9rem;
+      font-weight: 800;
+    }
+
+    /* Floating Inputs */
+    .form-floating input {
+      border-radius: 14px;
+    }
+
+    .btn-success {
+      border-radius: 14px;
+      padding: 12px;
+      font-weight: 600;
+    }
+
+    /* Password Match */
+    .match {
+      color: green;
+      font-size: 0.9rem;
+    }
+
+    .mismatch {
+      color: red;
+      font-size: 0.9rem;
+    }
+
+    /* Small animation */
+    .pulse {
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+  </style>
 </head>
-<body>
-    <form method="post" id="signupForm">
-        {% csrf_token %}
-        
-        <!-- Optional: Add your SIMATS logo -->
-        <img src="https://arms.sse.saveetha.com/assets/admin/layout/img/logo.png" alt="SIMATS Logo" class="logo"> 
-        
-        <h1>Sign Up</h1>
-        
-        <input type="email" id="email" name="email" placeholder="Email" required>
-        <input type="tel" id="phone" name="phone" placeholder="Phone Number" maxlength="10" required>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-        <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
-        
-        <button type="submit">Sign Up</button>
-        
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message {{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    </form>
 
-    <script>
-        document.getElementById("signupForm").addEventListener("submit", function(e) {
-            const password = document.getElementById("password").value;
-            const confirm_password = document.getElementById("confirm_password").value;
-            const phone = document.getElementById("phone").value.trim();
+<body class="d-flex align-items-center justify-content-center vh-100">
 
-            if (password !== confirm_password) {
-                e.preventDefault();
-                alert("Passwords do not match!");
-                return;
-            }
+<div class="signup-card p-4 pulse">
 
-            if (!/^\d{10}$/.test(phone)) {
-                e.preventDefault();
-                alert("Phone number must be exactly 10 digits!");
-                return;
-            }
-        });
-    </script>
+  <div class="text-center mb-4">
+    <div class="fs-1">🚀</div>
+    <h2 class="title">Create Account</h2>
+    <p class="text-muted">Secure end-to-end encrypted sharing</p>
+  </div>
+
+  <form method="post" id="signupForm">
+    {% csrf_token %}
+
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" name="email" placeholder="Email" required>
+      <label>Email address</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input type="tel" class="form-control" name="phone" placeholder="Phone" maxlength="10" required>
+      <label>Phone number</label>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+      <label>Password</label>
+    </div>
+
+    <div class="form-floating mb-2">
+      <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required>
+      <label>Confirm Password</label>
+    </div>
+
+    <div id="passwordStatus" class="mb-3"></div>
+
+    <button class="btn btn-success w-100 mt-2">
+      Create Account
+    </button>
+  </form>
+
+  <div class="text-center mt-3">
+    <small class="text-muted">
+      Already have an account?
+      <a href="{% url 'login' %}">Login</a>
+    </small>
+  </div>
+
+</div>
+
+<script>
+const password = document.getElementById("password");
+const confirmPassword = document.getElementById("confirmPassword");
+const status = document.getElementById("passwordStatus");
+
+confirmPassword.addEventListener("input", () => {
+  if (confirmPassword.value === "") {
+    status.innerHTML = "";
+    return;
+  }
+
+  if (password.value === confirmPassword.value) {
+    status.innerHTML = "<span class='match'>✔ Passwords match</span>";
+  } else {
+    status.innerHTML = "<span class='mismatch'>✖ Passwords do not match</span>";
+  }
+});
+
+document.getElementById("signupForm").addEventListener("submit", function(e) {
+  if (password.value !== confirmPassword.value) {
+    e.preventDefault();
+    confirmPassword.classList.add("is-invalid");
+  }
+});
+</script>
+
 </body>
 </html>

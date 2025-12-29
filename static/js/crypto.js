@@ -1,12 +1,21 @@
 async function handleUpload() {
   const fileInput = document.getElementById("fileInput");
   const file = fileInput.files[0];
-  if (!file) return alert("Select a file");
+
+  if (!file) {
+    alert("Select a file");
+    return;
+  }
+
+  updateProgress(5); // encryption started
 
   const encrypted = await encryptFile(file);
+
+  updateProgress(15); // encryption finished
   await uploadEncryptedFile(encrypted, file);
 }
 
+// 🔐 Encrypt file
 async function encryptFile(file) {
   const key = await crypto.subtle.generateKey(
     { name: "AES-GCM", length: 256 },
@@ -24,9 +33,11 @@ async function encryptFile(file) {
   );
 
   const rawKey = await crypto.subtle.exportKey("raw", key);
+
   return { encryptedBuffer, iv, rawKey };
 }
 
+// ⬆ REAL upload with progress
 async function uploadEncryptedFile(data, file) {
   const formData = new FormData();
 
@@ -35,22 +46,35 @@ async function uploadEncryptedFile(data, file) {
   formData.append("original_name", file.name);
   formData.append("mime_type", file.type || "application/octet-stream");
 
-  const res = await fetch("/files/upload/", {
-    method: "POST",
-    body: formData,
-    headers: { "X-CSRFToken": getCSRFToken() },
-  });
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "/files/upload/", true);
+  xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
 
-  const result = await res.json();
-  const keyBase64 = arrayToBase64(data.rawKey);
+  xhr.upload.onprogress = function (e) {
+    if (e.lengthComputable) {
+      const percent = Math.round((e.loaded / e.total) * 85) + 15;
+      updateProgress(percent);
+    }
+  };
 
-  const link =
-    `${window.location.origin}/files/download/${result.file_id}/#${keyBase64}`;
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const result = JSON.parse(xhr.responseText);
+      const keyBase64 = arrayToBase64(data.rawKey);
 
-  document.getElementById("shareLink").value = link;
-  document.getElementById("shareSection").style.display = "block";
+      const link =
+        `${window.location.origin}/files/download/${result.file_id}/#${keyBase64}`;
+
+      uploadComplete(link);
+    } else {
+      alert("Upload failed");
+    }
+  };
+
+  xhr.send(formData);
 }
 
+// 🔁 Helpers
 function arrayToBase64(buf) {
   return btoa(String.fromCharCode(...new Uint8Array(buf)));
 }
